@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "0.2.7"
+  version: "0.3.0"
   build: 0
 
 package:
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/c/cupdlpx/cupdlpx-${{ version }}.tar.gz
-  sha256: ff47af56867e293e5ffb6b6f231544ed9d0db5bc073478541aa47b4ba65fa4bb
+  sha256: 5f6175d244a4a2985bb4454dc908405d3bb0afd3f5755c6c64e4076b1af45fc4
 
 build:
   # Based on learnings from https://github.com/conda-forge/jaxlib-feedstock/blob/1b2b3761e145824a6d7a0bfb638344e1135a583d/recipe/recipe.yaml
@@ -48,8 +48,7 @@ build:
 
         ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     - if: win
-      then:
-        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+      then: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 
 requirements:
