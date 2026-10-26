@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   version: "0.2.7"
-  build: 0
+  build: 1
 
 package:
   name: cupdlpx
@@ -47,8 +47,13 @@ build:
         {%- endif %}
 
         ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - if: win and match(cuda_compiler_version, ">=13")
+      then: set "CUDAFLAGS=%CUDAFLAGS% -Xcompiler=/Zc:preprocessor"
     - if: win
-      then:
+      then: |
+        set "CMAKE_GENERATOR=Ninja"
+        set "CMAKE_GENERATOR_PLATFORM="
+        set "CMAKE_GENERATOR_TOOLSET="
         ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 
