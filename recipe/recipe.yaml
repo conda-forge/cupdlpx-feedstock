@@ -47,8 +47,14 @@ build:
         {%- endif %}
 
         ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - if: win and match(cuda_compiler_version, ">=13")
+      then: set "CUDAFLAGS=%CUDAFLAGS% -Xcompiler=/Zc:preprocessor"
     - if: win
-      then: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+      then: |
+        set "CMAKE_GENERATOR=Ninja"
+        set "CMAKE_GENERATOR_PLATFORM="
+        set "CMAKE_GENERATOR_TOOLSET="
+        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 
 requirements:
